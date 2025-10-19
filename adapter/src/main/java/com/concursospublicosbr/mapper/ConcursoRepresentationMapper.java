@@ -1,6 +1,6 @@
 package com.concursospublicosbr.mapper;
 
-import com.concursospublicosbr.model.ConcursoRepresentation;
+import com.concursospublicosbr.api.model.ConcursoRepresentation;
 import com.concursospublicosbr.domain.model.Concurso;
 import org.mapstruct.Mapper;
 

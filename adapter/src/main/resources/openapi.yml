@@ -1,0 +1,68 @@
+openapi: 3.0.4
+info:
+  title: Concursos Públicos BR API
+  version: 0.0.1
+  description: API para consulta de concursos públicos por UF
+servers:
+  - url: /
+paths:
+  /api/concursos/concursos-publicos:
+    get:
+      tags:
+        - Concursos
+      operationId: proxyGet
+      summary: Retorna concursos públicos por UF
+      parameters:
+        - in: query
+          name: uf
+          required: true
+          schema:
+            type: string
+          description: Unidade Federativa (ex. SP, RJ)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConcursoPublicoRepresentation'
+        '400':
+          description: Requisição inválida
+        '500':
+          description: Erro interno do servidor
+
+components:
+  schemas:
+    ConcursoPublicoRepresentation:
+      type: object
+      description: Representação de concursos públicos
+      properties:
+        estado:
+          type: string
+        uf:
+          type: string
+        concursosAbertos:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConcursoRepresentation'
+        concursosPrevistos:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConcursoRepresentation'
+
+    ConcursoRepresentation:
+      type: object
+      properties:
+        orgao:
+          type: string
+        vagas:
+          type: string
+
+
+
+
+
+
+
+
+
