@@ -20,7 +20,6 @@ hs_err_pid*
 replay_pid*
 
 # === Maven ===
-/target/
 !.mvn/wrapper/maven-wrapper.jar
 .mvn/timing.properties
 pom.xml.tag

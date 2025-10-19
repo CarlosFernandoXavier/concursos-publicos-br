@@ -1,7 +1,0 @@
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/domain/model/Concurso.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/service/ConcursosPublicosPublicosService.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/domain/response/ConcursoResponse.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/domain/model/ConcursoPublico.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/port/out/ConcursosPublicosRepositoryPort.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/port/in/ConcursosPublicosServicePort.java
-/home/xavier/CascadeProjects/concursos-publicos-br/application/src/main/java/com/concursospublicosbr/domain/response/ConcursoPublicResponse.java
