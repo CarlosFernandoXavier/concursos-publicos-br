@@ -53,3 +53,5 @@ coverage/
 # === Misc ===
 .tmp/
 .cache/
+adapter/target/
+application/target/
