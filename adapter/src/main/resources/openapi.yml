@@ -18,7 +18,10 @@ paths:
           required: true
           schema:
             type: string
-          description: Unidade Federativa (ex. SP, RJ)
+            nullable: false
+            minLength: 2
+            maxLength: 2
+          description: Unidade Federativa (ex. sp, rj)
       responses:
         '200':
           description: OK

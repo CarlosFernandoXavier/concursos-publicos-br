@@ -22,4 +22,11 @@ public class ConcursosProxyController implements ConcursosApi {
         ConcursoPublicoRepresentation concursoPublicoRepresentation = concursoPublicoRepresentationMapper.toConcursoPublicoRepresentation(response);
         return ResponseEntity.ok(concursoPublicoRepresentation);
     }
+
+    /*TODO quando voltar:
+    *  Adicionar autenticação jwt
+    *  Fazer o front deste projeto
+    *  Encontrar um lugar para fazer o deploy do front e back
+    *  Mostrar os resultados no Linkedin
+    * */
 }
