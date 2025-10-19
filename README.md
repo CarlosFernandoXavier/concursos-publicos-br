@@ -49,6 +49,30 @@ O projeto usa `springdoc-openapi` e gera interfaces a partir de `openapi.yml`.
 - Saída gerada: `adapter/target/generated-sources/openapi/`
 - Pacotes gerados: `com.concursospublicosbr.api` (interfaces, ex.: `ConcursosApi`) e `com.concursospublicosbr.api.model` (modelos)
 
+## Executar com Docker
+- Dockerfile multi-stage localizado em `Dockerfile` (raiz do projeto). Contexto filtrado por `.dockerignore`.
+
+### Build da imagem
+OBS: executar o comando abaixo na raiz do projeto
+```bash
+docker build -t concursos-publicos-br:latest .
+```
+
+### Executar o container
+```bash
+docker run --rm -p 8080:8080 concursos-publicos-br:latest
+```
+
+### Configurar opções da JVM (opcional)
+```bash
+docker run --rm -p 8080:8080 -e JAVA_OPTS="-Xms256m -Xmx512m" concursos-publicos-br:latest
+```
+
+### Testar
+```bash
+curl "http://localhost:8080/api/concursos/concursos-publicos?uf=SP"
+```
+
 ## Estrutura do projeto
 ```
 .
