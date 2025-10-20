@@ -1,9 +1,6 @@
 package com.concursospublicosbr.config;
 
-import com.concursospublicosbr.mapper.ConcursoMapper;
-import com.concursospublicosbr.mapper.ConcursoPublicoMapper;
-import com.concursospublicosbr.mapper.ConcursoPublicoRepresentationMapper;
-import com.concursospublicosbr.mapper.ConcursoRepresentationMapper;
+import com.concursospublicosbr.mapper.*;
 import com.concursospublicosbr.port.in.ConcursosPublicosServicePort;
 import com.concursospublicosbr.port.out.ConcursosPublicosRepositoryPort;
 import com.concursospublicosbr.service.ConcursosPublicosPublicosService;
@@ -43,5 +40,10 @@ public class ApplicationBeansConfig {
     @Bean
     public ConcursoRepresentationMapper concursoRepresentationMapper() {
         return Mappers.getMapper(ConcursoRepresentationMapper.class);
+    }
+
+    @Bean
+    public TokenMapper tokenMapper() {
+        return Mappers.getMapper(TokenMapper.class);
     }
 }

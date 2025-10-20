@@ -49,6 +49,47 @@ O projeto usa `springdoc-openapi` e gera interfaces a partir de `openapi.yml`.
 - Saída gerada: `adapter/target/generated-sources/openapi/`
 - Pacotes gerados: `com.concursospublicosbr.api` (interfaces, ex.: `ConcursosApi`) e `com.concursospublicosbr.api.model` (modelos)
 
+## Autenticação JWT
+- **Dependências**: `spring-boot-starter-security` e `io.jsonwebtoken:jjwt-*` adicionadas no módulo `adapter`.
+- **Arquivos principais**:
+  - `adapter/src/main/java/com/concursospublicosbr/security/SecurityConfig.java`
+  - `adapter/src/main/java/com/concursospublicosbr/security/JwtTokenProvider.java`
+  - `adapter/src/main/java/com/concursospublicosbr/security/JwtAuthenticationFilter.java`
+  - `adapter/src/main/java/com/concursospublicosbr/in/web/AuthController.java` (gera tokens)
+- **Configurações**: `adapter/src/main/resources/application.properties`
+  - `jwt.secret` (obrigatório): defina um segredo com pelo menos 32 bytes.
+  - `jwt.expiration` (segundos): padrão `3600`.
+
+### Gerar um token
+Endpoint público: `POST /auth/token`
+
+Request exemplo:
+```bash
+curl -X POST http://localhost:8080/auth/token \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "user", "roles": ["USER"]}'
+```
+
+Resposta:
+```json
+{ "token": "<JWT>" }
+```
+
+### Chamar endpoint protegido
+Todos os endpoints sob `/api/**` exigem `Authorization: Bearer <JWT>`.
+
+Exemplo:
+```bash
+TOKEN=$(curl -s -X POST http://localhost:8080/auth/token -H 'Content-Type: application/json' -d '{"username":"user","roles":["USER"]}' | jq -r .token)
+curl -H "Authorization: Bearer $TOKEN" "http://localhost:8080/api/concursos/concursos-publicos?uf=sp"
+```
+
+Se não quiser usar `jq`:
+```bash
+TOKEN="<cole o token aqui>"
+curl -H "Authorization: Bearer $TOKEN" "http://localhost:8080/api/concursos/concursos-publicos?uf=sp"
+```
+
 ## Executar com Docker
 - Dockerfile multi-stage localizado em `Dockerfile` (raiz do projeto). Contexto filtrado por `.dockerignore`.
 
@@ -99,3 +140,4 @@ java -jar adapter/target/adapter-0.0.1-SNAPSHOT.jar
 ```
 - O gerador usa `org.openapitools:jackson-databind-nullable` para tipos `JsonNullable` (já declarado em `adapter/pom.xml`).
 - Diretórios de build ignorados no Git: `adapter/target/` e `application/target/`.
+
