@@ -5,18 +5,20 @@ import com.concursospublicosbr.enums.UnidadeFederativaEnum;
 import com.concursospublicosbr.exception.BusinessException;
 import com.concursospublicosbr.port.in.ConcursosPublicosServicePort;
 import com.concursospublicosbr.port.out.ConcursosPublicosRepositoryPort;
-import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 
-@RequiredArgsConstructor
 public class ConcursosPublicosPublicosService implements ConcursosPublicosServicePort {
 
     private static final Logger log = LoggerFactory.getLogger(ConcursosPublicosPublicosService.class);
     private final ConcursosPublicosRepositoryPort concursosPublicosRepositoryPort;
+
+    public ConcursosPublicosPublicosService(ConcursosPublicosRepositoryPort concursosPublicosRepositoryPort) {
+        this.concursosPublicosRepositoryPort = concursosPublicosRepositoryPort;
+    }
 
 
     @Override
@@ -34,3 +36,4 @@ public class ConcursosPublicosPublicosService implements ConcursosPublicosServic
         }
     }
 }
+
