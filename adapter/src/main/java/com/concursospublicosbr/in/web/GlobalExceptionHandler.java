@@ -13,11 +13,19 @@ import org.springframework.web.client.HttpClientErrorException;
 import javax.validation.ConstraintViolationException;
 import java.time.OffsetDateTime;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    private final MessageSource messageSource;
+
+    public GlobalExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex, HttpServletRequest request) {
@@ -35,7 +43,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request) {
         log.error("ConstraintViolationException: {}", ex.getMessage());
         ErrorResponse body = new ErrorResponse();
-        body.setMessage("Uf deve ser preenchida por ao menos uma das siglas a seguir: ac, al, ap, am, ba, ce, df, es, go, ma, mt, ms, mg, pa, pb, pr, pe, pi, rj, rn, rs, ro, rr, sc, sp, se, to");
+        body.setMessage(messageSource.getMessage("error.violation.uf_list", null, LocaleContextHolder.getLocale()));
         body.setError("VIOLATION_ERROR");
         body.setStatus(HttpStatus.BAD_REQUEST.value());
         body.setTimestamp(OffsetDateTime.now());
@@ -47,7 +55,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleHttpClientErrorException(HttpClientErrorException ex, HttpServletRequest request) {
         log.error("HttpClientErrorException {}", ex.getMessage());
         ErrorResponse body = new ErrorResponse();
-        body.setMessage("Unidade Federativa (uf) não encontrada");
+        body.setMessage(messageSource.getMessage("error.not_found.uf", null, LocaleContextHolder.getLocale()));
         body.setError("NOT_FOUND_ERROR");
         body.setStatus(HttpStatus.NOT_FOUND.value());
         body.setTimestamp(OffsetDateTime.now());
@@ -59,7 +67,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {
         log.error("Unhandled exception: {}", ex.getMessage());
         ErrorResponse body = new ErrorResponse();
-        body.setMessage("Erro interno no servidor");
+        body.setMessage(messageSource.getMessage("error.internal", null, LocaleContextHolder.getLocale()));
         body.setError("INTERNAL_ERROR");
         body.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         body.setTimestamp(OffsetDateTime.now());
@@ -67,4 +75,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 }
+
 
