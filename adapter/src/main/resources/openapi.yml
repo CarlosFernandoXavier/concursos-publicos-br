@@ -95,6 +95,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ConcursoRepresentation'
+        mensagem:
+          type: string
 
     ConcursoRepresentation:
       type: object

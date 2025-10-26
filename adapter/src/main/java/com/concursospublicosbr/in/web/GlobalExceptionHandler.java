@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
@@ -62,6 +63,19 @@ public class GlobalExceptionHandler {
         body.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex, HttpServletRequest request) {
+        log.error("ConstraintViolationException: {}", ex.getMessage());
+        ErrorResponse body = new ErrorResponse();
+        body.setMessage(messageSource.getMessage("error.violation.uf_list", null, LocaleContextHolder.getLocale()));
+        body.setError("VIOLATION_ERROR");
+        body.setStatus(HttpStatus.BAD_REQUEST.value());
+        body.setTimestamp(OffsetDateTime.now());
+        body.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {

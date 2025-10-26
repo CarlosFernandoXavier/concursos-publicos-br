@@ -8,6 +8,8 @@ import com.concursospublicosbr.api.ConcursosApi;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @AllArgsConstructor
@@ -17,7 +19,8 @@ public class ConcursosProxyController implements ConcursosApi {
     private final ConcursoPublicoRepresentationMapper concursoPublicoRepresentationMapper;
 
     @Override
-    public ResponseEntity<ConcursoPublicoRepresentation> proxyGet(String uf) {
+    @GetMapping("/api/concursos/concursos-publicos")
+    public ResponseEntity<ConcursoPublicoRepresentation> proxyGet(@RequestParam("uf") String uf) {
         ConcursoPublico response = concursosPublicosService.getConcursosPublicosDisponiveis(uf);
         ConcursoPublicoRepresentation concursoPublicoRepresentation = concursoPublicoRepresentationMapper.toConcursoPublicoRepresentation(response);
         return ResponseEntity.ok(concursoPublicoRepresentation);
