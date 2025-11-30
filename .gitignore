@@ -35,7 +35,13 @@ buildNumber.properties
 *.iml
 *.ipr
 *.iws
-out/
+# Ignore build output directories
+/out/
+/target/
+
+# But allow our source files in port/out/
+!**/src/**/out/
+
 
 # === Eclipse (caso alguém abra) ===
 .project
