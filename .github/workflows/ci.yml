@@ -25,4 +25,5 @@ jobs:
           ls -la
 
       - name: Build and test (all modules)
+        working-directory: ./
         run: mvn -B -U -DskipTests=false clean verify
