@@ -19,5 +19,10 @@ jobs:
           java-version: '11'
           cache: maven
 
+      - name: Check current directory
+        run: |
+          pwd
+          ls -la
+
       - name: Build and test (all modules)
         run: mvn -B -U -DskipTests=false clean verify
