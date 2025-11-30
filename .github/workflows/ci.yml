@@ -26,4 +26,7 @@ jobs:
 
       - name: Build and test (all modules)
         working-directory: ./
-        run: mvn -B -U -DskipTests=false clean verify
+        run: |
+          mvn -B -U clean compile -e -X
+          mvn -B -U test
+          mvn -B -U verify
